@@ -1,6 +1,7 @@
 class Simulation {
   public static void main(String[] args) throws Exception{
 
+    //Currently just testing area
     Matrix mat1 = new Matrix(4, 5);
     Matrix mat2 = new Matrix(5, 3);
 
@@ -18,9 +19,14 @@ class Simulation {
     System.out.println("Matrix #3");
     mat3.print();
 
-    mat3.mul(5);
+    mat3.transpose();
 
     System.out.println("Matrix #3.1");
+    mat3.print();
+
+    mat3.transpose();
+
+    System.out.println("Matrix #3.2");
     mat3.print();
   }
 }
