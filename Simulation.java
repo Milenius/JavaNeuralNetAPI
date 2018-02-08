@@ -1,8 +1,8 @@
-import processing.core.PApplet;
+import processing.core.*;
 
-class test extends PApplet{
+public class Simulation extends PApplet{
   public static void main(String[] args) {
-    PApplet.main("test");
+    PApplet.main("Simulation");
   }
 
   public void settings(){
