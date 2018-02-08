@@ -1,19 +1,26 @@
-import processing.core.*;
+class Simulation {
+  public static void main(String[] args) throws Exception{
 
-public class Simulation extends PApplet{
-  public static void main(String[] args) {
-    PApplet.main("Simulation");
-  }
+    Matrix mat1 = new Matrix(4, 5);
+    Matrix mat2 = new Matrix(5, 3);
 
-  public void settings(){
-    size(1600,900);
-  }
+    mat1.randomize(-2, 2);
+    mat2.randomize(-2, 2);
 
-  public void setup(){
+    Matrix mat3 = Matrix.matMul(mat1, mat2);
 
-  }
+    System.out.println("Matrix #1");
+    mat1.print();
 
-  public void draw(){
-    ellipse(50,50,50,50);
+    System.out.println("Matrix #2");
+    mat2.print();
+
+    System.out.println("Matrix #3");
+    mat3.print();
+
+    mat3.mul(5);
+
+    System.out.println("Matrix #3.1");
+    mat3.print();
   }
 }
