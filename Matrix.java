@@ -3,12 +3,14 @@ class Matrix {
   int cols;
   float[][] matrix;
 
+  //Constructor from 2 size declarations
   Matrix(int argRows, int argCols) {
     rows = argRows;
     cols = argCols;
     matrix = new float[rows][cols];
   }
 
+  //Constructor from 2D float Array
   Matrix(float[][] argMatrix) {
     matrix = argMatrix;
     rows = argMatrix[0].length;
@@ -63,6 +65,15 @@ class Matrix {
     }
   }
 
+  //Fills each entry with a zero
+  void fillZero(){
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        matrix[i][j] = 0.0f;
+      }
+    }
+  }
+
   //Multiplies two matricies with each other
   static Matrix matMul(Matrix argMat1, Matrix argMat2) throws Exception{
     if (argMat1.cols != argMat2.rows) throw new matrixSizeException("not compatible matrix sizes");
@@ -83,6 +94,22 @@ class Matrix {
     return outputMatrix;
   }
 
+  //Transposes the matrix
+  void transpose(){
+    float[][] tempMatrix = new float[cols][rows];
+    int tempRows;
+
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        tempMatrix[j][i] = matrix[i][j];
+      }
+    }
+
+    tempRows = rows;
+    rows = cols;
+    cols = tempRows;
+    matrix = tempMatrix;
+  }
 
 
   //------------------------------MATH FUNCTIONS------------------------------//
