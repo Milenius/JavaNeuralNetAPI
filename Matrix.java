@@ -13,8 +13,8 @@ class Matrix {
   //Constructor from 2D float Array
   Matrix(float[][] argMatrix) {
     matrix = argMatrix;
-    rows = argMatrix[0].length;
-    cols = argMatrix.length;
+    rows = argMatrix.length;
+    cols = argMatrix[0].length;
   }
 
   //Prints the matrix
@@ -57,7 +57,7 @@ class Matrix {
   }
 
   //Randomizes the matrix with values of n, where: minValue <= n < maxValue
-  void randomize(int maxValue, int minValue){
+  void randomize(int minValue, int maxValue){
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
         matrix[i][j] = (float) (Math.random() * (maxValue-minValue)) + minValue;
@@ -72,6 +72,23 @@ class Matrix {
         matrix[i][j] = 0.0f;
       }
     }
+  }
+
+  //Transposes the matrix
+  void transpose(){
+    float[][] tempMatrix = new float[cols][rows];
+    int tempRows;
+
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        tempMatrix[j][i] = matrix[i][j];
+      }
+    }
+
+    tempRows = rows;
+    rows = cols;
+    cols = tempRows;
+    matrix = tempMatrix;
   }
 
   //Multiplies two matricies with each other
@@ -94,153 +111,108 @@ class Matrix {
     return outputMatrix;
   }
 
-  //Transposes the matrix
-  void transpose(){
-    float[][] tempMatrix = new float[cols][rows];
-    int tempRows;
+  static Matrix pow(Number n, Matrix mat){
+    Matrix result = new Matrix(mat.rows, mat.cols);
 
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        tempMatrix[j][i] = matrix[i][j];
+    for (int i = 0; i < mat.rows; i++) {
+      for (int j = 0; j < mat.cols; j++) {
+        result.setValue(i, j, (float) Math.pow(n.floatValue(), mat.getValue(i, j)));
       }
     }
 
-    tempRows = rows;
-    rows = cols;
-    cols = tempRows;
-    matrix = tempMatrix;
+    return result;
   }
 
+  static Matrix exp(Matrix mat){
+    Matrix result = new Matrix(mat.rows, mat.cols);
+
+    for (int i = 0; i < mat.rows; i++) {
+      for (int j = 0; j < mat.cols; j++) {
+        result.setValue(i, j, (float) Math.exp(mat.getValue(i, j)));
+      }
+    }
+
+    return result;
+  }
 
   //------------------------------MATH FUNCTIONS------------------------------//
   //---------------------DANGER : A LOT OF REDUNDANT CODE---------------------//
   //--------------------------------------------------------------------------//
-  //---------------------REALLY. NOT NEED TO LOOK AT IT-----------------------//
+  //---------------------REALLY. NO NEED TO LOOK AT IT------------------------//
 
-  //Multiplies each entry with an integer n
-  void mul(int n) {
+  //Multiplies each entry with n
+  void mul(Number n) {
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        matrix[i][j] = getValue(i, j) * n;
+        matrix[i][j] *= n.floatValue();
       }
     }
   }
 
-  //Multiplies each entry with an float n
-  void mul(float n) {
+  //Divides each entry with n
+  void div(Number n) {
+    mul(1/n.floatValue());
+  }
+
+  //Adds to each entry a value n
+  void add(Number n){
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        matrix[i][j] = getValue(i, j) * n;
+        matrix[i][j] += n.floatValue();
       }
     }
   }
 
-  //Multiplies each entry with an double n
-  void mul(double n) {
+  //Subtracts to each entry a value n
+  void sub(Number n){
+    add(-n.floatValue());
+  }
+
+  //Calculates the power of n for each entry
+  void pow(Number n){
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        matrix[i][j] =  getValue(i, j) * (float) n;
+        matrix[i][j] = (float) Math.pow(matrix[i][j], n.floatValue());
       }
     }
   }
 
-  //Adds to each entry an integer value n
-  void add(int n){
+  //Exponentiates each entry
+  void exp(){
     for (int i = 0; i < rows; i++) {
       for (int j = 0; j < cols; j++) {
-        matrix[i][j] = getValue(i, j) + n;
+        matrix[i][j] = (float) Math.exp(matrix[i][j]);
       }
     }
   }
 
-  //Adds to each entry a float value n
-  void add(float n){
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        matrix[i][j] = getValue(i, j) + n;
-      }
-    }
+  //Multiplies a specific entry with n
+  void mul(int x, int y, Number n) {
+    matrix[x][y] *= n.floatValue();
   }
 
-  //Adds to each entry a double value n
-  void add(double n){
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        matrix[i][j] = getValue(i, j) + (float) n;
-      }
-    }
+  //Divides a specific entry with n
+  void div(int x, int y, Number n) {
+    mul(x, y, 1/n.floatValue());
   }
 
-  //Subtracts to each entry an integer value n
-  void sub(int n){
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        matrix[i][j] = getValue(i, j) - n;
-      }
-    }
+  //Adds to a specific entry a value n
+  void add(int x, int y, Number n){
+    matrix[x][y] += n.floatValue();
   }
 
-  //Subtracts to each entry a float value n
-  void sub(float n){
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        matrix[i][j] = getValue(i, j) - n;
-      }
-    }
+  //Subtracts a specific entry with a value n
+  void sub(int x, int y, Number n){
+    add(x, y, -n.floatValue());
   }
 
-  //Subtracts to each entry a double value n
-  void sub(double n){
-    for (int i = 0; i < rows; i++) {
-      for (int j = 0; j < cols; j++) {
-        matrix[i][j] = getValue(i, j) - (float) n;
-      }
-    }
+  //Calculates the power of n for each entry
+  void pow(int x, int y, Number n){
+    matrix[x][y] = (float) Math.pow(matrix[x][y], n.floatValue());
   }
 
-  //Multiplies a specific entry with an integer n
-  void mul(int x, int y, int n) {
-    setValue(x, y, getValue(x, y) * n);
+  //Exponentiates a specific entry
+  void exp(int x, int y){
+    matrix[x][y] = (float) Math.exp(matrix[x][y]);
   }
-
-  //Multiplies a specific entry with an float n
-  void mul(int x, int y, float n) {
-    setValue(x, y, getValue(x, y) * n);
-  }
-
-  //Multiplies a specific entry with an double n
-  void mul(int x, int y, double n) {
-    setValue(x, y, getValue(x, y) * (float) n);
-  }
-
-  //Adds to a specific entry an integer value n
-  void add(int x, int y, int n){
-    setValue(x, y, getValue(x, y) + n);
-  }
-
-  //Adds to a specific entry a float value n
-  void add(int x, int y, float n){
-    setValue(x, y, getValue(x, y) + n);
-  }
-
-  //Adds to a specific entry a double value n
-  void add(int x, int y, double n){
-    setValue(x, y, getValue(x, y) + (float) n);
-  }
-
-  //Subtracts a specific entry with an integer value n
-  void sub(int x, int y, int n){
-    setValue(x, y, getValue(x, y) - n);
-  }
-
-  //Subtracts a specific entry with a float value n
-  void sub(int x, int y, float n){
-    setValue(x, y, getValue(x, y) - n);
-  }
-
-  //Subtracts a specific entry with a double value n
-  void sub(int x, int y, double n){
-    setValue(x, y, getValue(x, y) - (float) n);
-  }
-
 }
