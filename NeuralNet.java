@@ -1,25 +1,5 @@
 class NeuralNet{
   /*
-  Matrix[] synapseLayer;
-
-  NeuralNet(int inputs, int[] hidden, int outputs){
-
-    synapseLayer = new Matrix[hidden.length+1];
-
-    for (int i = 0; i < synapseLayer.length; i++){
-      if (i == 0) {
-        synapseLayer[0] = new Matrix(hidden[0], inputs);
-        synapseLayer[0].randomize();
-      } else if (i != synapseLayer.length-1) {
-        synapseLayer[i] = new Matrix(hidden[i], hidden[i-1]);
-        synapseLayer[i].randomize();
-      } else {
-        synapseLayer[synapseLayer.length-1] = new Matrix(outputs, hidden[i-1]);
-        synapseLayer[synapseLayer.length-1].randomize();
-      }
-    }
-  }
-
   Matrix feedForward(Matrix inputs) throws Exception{
     Matrix tempResult = new Matrix(1,1);
 
@@ -49,7 +29,7 @@ class NeuralNet{
 
     //Creates synapse layer
     for (int i = 0; i < syns.length; i++){
-      syns[i] = new SynapseLayer(layer[i], layer[i+1]);
+      syns[i] = new SynapseLayer(layer[i+1], layer[i]);
     }
 
     //Console debugging
@@ -60,16 +40,31 @@ class NeuralNet{
     System.out.println("");
   }
 
+  //Randomizes all Synapses (Random Value from -2 to 2)
   void randomizeSynapses(){
     randomizeSynapses(-2, 2);
   }
 
+  //Randomizes all Synapses (Random Value is in a specific range)
   void randomizeSynapses(int minRand, int maxRand){
     for (int i = 0; i < syns.length; i++) {
-        syns[i].randomize(minRand, maxRand);
-        syns[i].print();
+      syns[i].randomize(minRand, maxRand);
     }
   }
 
+  //Sets the activation function of all (but the input) layer
+  void setGeneralActivationFunc(String actFunc) throws Exception{
+    for (int i = 1; i < layer.length; i++) {
+      layer[i].setActivationFunc(actFunc);
+    }
+  }
 
+  //Feeds data through the network
+  void feedForward(Matrix input) throws Exception{
+    layer[0].setValues(input);
+    for (int i = 1; i < layer.length; i++) {
+      layer[i].setValues(NeuronLayer.sigmoid(Matrix.matMul(syns[i-1], layer[i-1].getValues())));
+    }
+
+  }
 }
