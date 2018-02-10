@@ -186,6 +186,14 @@ class Matrix {
     }
   }
 
+  void tanh(){
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        matrix[i][j] = (float) Math.tanh(matrix[i][j]);
+      }
+    }
+  }
+
   //Multiplies a specific entry with n
   void mul(int x, int y, Number n) {
     matrix[x][y] *= n.floatValue();
