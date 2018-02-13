@@ -1,13 +1,4 @@
 class NeuralNet{
-  /*
-  Matrix feedForward(Matrix inputs) throws Exception{
-    Matrix tempResult = new Matrix(1,1);
-
-    tempResult = Matrix.matMul(synapseLayer[0], inputs);
-    tempResult = Matrix.matMul(synapseLayer[1], tempResult);
-    return tempResult;
-  }
-  */
 
   NeuronLayer[]  layer;
   SynapseLayer[] syns;
@@ -19,18 +10,19 @@ class NeuralNet{
     syns     = new SynapseLayer[layer.length-1];
 
     //Creates input and output layer
-    layer[0]              = new InputLayer(inputs);
+    layer[0]              = new InputLayer(inputs + 1);
     layer[layer.length-1] = new OutputLayer(outputs);
 
     //Creates all hidden layer
     for (int i = 1; i < layer.length-1; i++){
-      layer[i] = new HiddenLayer(hidden[i-1]);
+      layer[i] = new HiddenLayer(hidden[i-1] + 1);
     }
 
     //Creates synapse layer
     for (int i = 0; i < syns.length; i++){
       syns[i] = new SynapseLayer(layer[i+1], layer[i]);
     }
+    syns[syns.length-1] = new SynapseLayer(layer[layer.length-1], layer[layer.length-2], true);
 
     //Console debugging
     System.out.println("\nNeuralNet created with: ");

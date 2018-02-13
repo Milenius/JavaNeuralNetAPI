@@ -29,8 +29,8 @@ class Matrix {
   }
 
   //Sets a specific value in the matrix
-  void setValue(int x, int y, float argValue){
-    matrix[x][y] = argValue;
+  void setValue(int x, int y, Number argValue){
+    matrix[x][y] = argValue.floatValue();
   }
 
   //Gets a specific value from the matrix

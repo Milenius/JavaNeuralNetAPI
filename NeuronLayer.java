@@ -1,7 +1,7 @@
 abstract class NeuronLayer{
   int size;
   Matrix neurons;
-  String activationFunc;
+  String activationFunc = "sigmoid";
   String[] availibleFuncs = new String[] {"sigmoid", "tanh"};
 
   //Sigmoid activation function
@@ -36,8 +36,10 @@ abstract class NeuronLayer{
   }
 
   //Get layer values
-  void setValues(Matrix values){
-    neurons = values;
+  void setValues(Matrix input){
+    for (int i = 0; i < input.rows; i++) {
+      neurons.setValue(i, 0, input.getValue(i, 0));
+    }
   }
 
   //Get layer values
