@@ -2,7 +2,6 @@ class Simulation {
   public static void main(String[] args) throws Exception{
 
     //Currently just testing area
-    NeuralNet net = new NeuralNet(3, new int[]{8, 7}, 4);
     Matrix trainInput = new Matrix(new float[][]{{0.0f, 0.0f},
                                                  {0.0f, 1.0f},
                                                  {1.0f, 0.0f},
@@ -12,6 +11,8 @@ class Simulation {
                                                   {1.0f},
                                                   {1.0f},
                                                   {0.0f}});
+    
+    NeuralNet net = new NeuralNet(2, new int[]{4}, 1);
 
     net.randomizeSynapses();
     net.feedForward(trainInput);
