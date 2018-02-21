@@ -52,11 +52,21 @@ class NeuralNet{
   }
 
   //Feeds data through the network
-  void feedForward(Matrix input) throws Exception{
+  Matrix feedForward(Matrix input) throws Exception{
     layer[0].setValues(input);
     for (int i = 1; i < layer.length; i++) {
       layer[i].setValues(NeuronLayer.sigmoid(Matrix.matMul(syns[i-1], layer[i-1].getValues())));
     }
+    return layer[layer.length-1].getValues();
+  }
 
+  void backprop(Matrix input, Matrix output) throws Exception{
+    float[][] estArr = new float[output.rows][output.cols];
+    Matrix estMat = new Matrix(estArr);
+
+    /*float[][] inputArr = 
+    for (int i = 0; input.length; i++) {
+      est = feedForward();
+    }*/
   }
 }

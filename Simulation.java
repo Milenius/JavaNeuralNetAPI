@@ -11,15 +11,19 @@ class Simulation {
                                                   {1.0f},
                                                   {1.0f},
                                                   {0.0f}});
-    
+
     NeuralNet net = new NeuralNet(2, new int[]{4}, 1);
 
     net.randomizeSynapses();
-    net.feedForward(trainInput);
+    //net.backprop(trainInput, trainOutput);
 
     for (int i = 0; i < net.layer.length; i++) {
-      net.layer[i].neurons.print();
+      //net.layer[i].neurons.print();
     }
+
+    trainInput.getRow(0).print();
+
+    //Matrix.matMul(trainInput, net.syns[0]).print();
 
   }
 }

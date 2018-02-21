@@ -28,6 +28,24 @@ class Matrix {
     System.out.println();
   }
 
+  float[][] toArray(){
+    return matrix;
+  }
+
+  void fromArray(float[][] arr){
+    matrix = arr;
+    rows = arr.length;
+    cols = arr[0]. length;
+  }
+
+  Matrix getRow(int n){
+    Matrix tempMat = new Matrix(1, cols);
+    for (int i = 0; i < matrix[n].length; i++) {
+      tempMat.setValue(i, 0, matrix[n][i]);
+    }
+    return tempMat;
+  }
+
   //Sets a specific value in the matrix
   void setValue(int x, int y, Number argValue){
     matrix[x][y] = argValue.floatValue();
