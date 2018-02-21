@@ -41,9 +41,15 @@ class Matrix {
   Matrix getRow(int n){
     Matrix tempMat = new Matrix(1, cols);
     for (int i = 0; i < matrix[n].length; i++) {
-      tempMat.setValue(i, 0, matrix[n][i]);
+      tempMat.setValue(0, i, matrix[n][i]);
     }
     return tempMat;
+  }
+
+  void setRow(int n, Matrix aRow){
+    for (int i = 0; i < matrix[n].length; i++) {
+      matrix[n][i] = aRow.getValue(0, i);
+    }
   }
 
   //Sets a specific value in the matrix

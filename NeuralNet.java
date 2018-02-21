@@ -61,12 +61,13 @@ class NeuralNet{
   }
 
   void backprop(Matrix input, Matrix output) throws Exception{
-    float[][] estArr = new float[output.rows][output.cols];
-    Matrix estMat = new Matrix(estArr);
+    Matrix est = new Matrix(output.rows, output.cols);
 
-    /*float[][] inputArr = 
-    for (int i = 0; input.length; i++) {
-      est = feedForward();
-    }*/
+    for (int i = 0; i < input.toArray().length; i++) {
+      //est.setRow(i, feedForward(input.getRow(i)));
+      feedForward(input.getRow(i)).print();
+    }
+
+    //est.print();
   }
 }
